@@ -10,6 +10,7 @@ import type {
 } from './shared.types'
 import Question from '@/database/question.model'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getUserByID(params: any) {
   try {
     connectToDatabase()

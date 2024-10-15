@@ -1,25 +1,27 @@
 'use client'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
-import React from 'react'
-interface LocalSearchbarProps {
+
+import React, { useState } from 'react'
+interface CustomInputProps {
   route: string
-  iconPosition?: 'left' | 'right'
-  imgSrc?: string
-  placeholder?: string
+  iconPosition: string
+  imgSrc: string
+  placeholder: string
   otherClasses?: string
 }
+
 const LocalSearchbar = ({
-  route,
+  // route,
   iconPosition,
   imgSrc,
   placeholder,
   otherClasses,
-}: LocalSearchbarProps) => {
+}: CustomInputProps) => {
+  const [search, setSearch] = useState('')
   return (
     <div
-      className={`background-light800_darkgradient ${otherClasses} flex min-h-[56px] grow
-   items-center gap-4rounded-[10px] px-4`}
+      className={`background-light800_darkgradient flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4 ${otherClasses}`}
     >
       {iconPosition === 'left' && (
         <Image
@@ -30,11 +32,15 @@ const LocalSearchbar = ({
           className="cursor-pointer"
         />
       )}
+
       <Input
         type="text"
         placeholder={placeholder}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         className="paragraph-regular no-focus placeholder text-dark400_light700 border-none bg-transparent shadow-none outline-none"
       />
+
       {iconPosition === 'right' && (
         <Image
           src={imgSrc}
