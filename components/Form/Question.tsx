@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
@@ -30,7 +31,7 @@ interface Props {
 }
 const Question = ({ mongoUserId }: Props) => {
   const Router = useRouter()
-  const path = usePathname()
+  const pathname = usePathname()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { mode } = useTheme()
   const editorRef = useRef(null)
@@ -56,6 +57,7 @@ const Question = ({ mongoUserId }: Props) => {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
+        path: pathname,
       })
       Router.push('/')
     } catch (error) {}
