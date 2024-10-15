@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -19,9 +21,16 @@ import { Editor } from '@tinymce/tinymce-react'
 import { useTheme } from '@/context/ThemeProvider'
 import { Badge } from '../ui/badge'
 import Image from 'next/image'
-//  zod for validateing
+import { createQuestion } from '@/lib/actions/questions.action'
+import { useRouter, usePathname } from 'next/navigation'
 
-const Question = () => {
+//  zod for validateing
+interface Props {
+  mongoUserId: string
+}
+const Question = ({ mongoUserId }: Props) => {
+  const Router = useRouter()
+  const path = usePathname()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { mode } = useTheme()
   const editorRef = useRef(null)
@@ -40,10 +49,16 @@ const Question = () => {
 
   // 2. Define a submit handler.
 
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
-    // Do something with the form values.
-    //  This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+    try {
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      })
+      Router.push('/')
+    } catch (error) {}
   }
 
   // TAGS HANDLER
