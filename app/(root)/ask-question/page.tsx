@@ -9,7 +9,6 @@ const page = async () => {
   const { userId } = auth()
   if (!userId) redirect('/sign-in')
   const mongoUser = await getUserByID({ userId })
-  console.log(mongoUser)
 
   return (
     <div>
