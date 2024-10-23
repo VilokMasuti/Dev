@@ -13,6 +13,7 @@ import Answer from '@/components/Form/Answer' // Form component for submitting a
 import { auth } from '@clerk/nextjs/server' // Clerk authentication for server-side user verification
 import { getUserByID } from '@/lib/actions/user.actions' // Function to fetch user details from MongoDB by user ID
 import AllAnswer from '@/components/shared/AllAnswer'
+import Voteing from '@/components/shared/Voteing'
 
 // The main function for the page component; this is a Next.js server-side component
 const page = async ({ params }: any) => {
@@ -54,7 +55,18 @@ const page = async ({ params }: any) => {
               {result.author.name}
             </p>
           </Link>
-          <div className="flex justify-end"></div>
+          <div className="flex justify-end">
+            <Voteing
+              type="Question"
+              itemId={JSON.stringify(result._id)}
+              userId={JSON.stringify(mongoUser?._id)}
+              upvotes={result.upvotes.length}
+              hasupVoted={result.upvotes.includes(mongoUser?._id)}
+              downvotes={result.downvotes.length}
+              hasdownVoted={result.downvotes.includes(mongoUser?._id)}
+              hasSaved={mongoUser?.saved.includes(result._id)}
+            />
+          </div>
         </div>
 
         {/* Display the question title */}

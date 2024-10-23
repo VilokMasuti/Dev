@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getTimestamp } from '@/lib/utils'
 import ParseHTML from './ParseHTML '
+import Voteing from './Voteing'
 interface Props {
   questionId: string
   userId: string
@@ -53,7 +54,9 @@ const AllAnswer = async ({ questionId, userId, totalAnswers }: Props) => {
         ))}
       </div>
 
-      <div className="mt-10 w-full"></div>
+      <div className="mt-10 w-full">
+        <Voteing />
+      </div>
     </div>
   )
 }
